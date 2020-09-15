@@ -1,13 +1,37 @@
-# arXiv-demo-dataset
+# weaviate-arXiv-dataset-demo
 
 This repository will contain a demo using Weaviate with data and metadata from the arXiv dataset.
 
 ## Datasets
 
-### arXiv 
+In this repository, we have created weaviate schema for ArXiV metadata and PapersWithCode datasets.
+Below, we will detail how to fetch and prepare these datasets for ingestion into Weaviate.
 
-#### requirements
+### ArXiV dataset
+
+#### Requirements
 `gsutil` package 
+
+##### Installation
+* Last updated: September 4, 2020
+* Source: [Google Cloud Documentation](https://cloud.google.com/sdk/docs#deb)
+```bash
+# 1. Add Cloud SDK URI as a package source.
+
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+# 2. Install the necessary dependencies.
+sudo apt-get install apt-transport-https ca-certificates gnupg
+
+# 3. Import the Google Cloud public key.
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+
+# 4. Fetch the latest repository information, install Cloud SDK.
+sudo apt-get update && sudo apt-get install google-cloud-sdk
+
+# 5. Initialize Cloud SDK.
+gcloud init
+```
 
 #### download the dataset
 
