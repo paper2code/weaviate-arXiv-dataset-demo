@@ -9,6 +9,25 @@ Weaviate is a cloud-native, realtime vector search engine that allows you to bri
 In this repository, we have created weaviate schemas for ArXiV and PapersWithCode datasets.
 Below, we will detail how to fetch and prepare these datasets for ingestion into Weaviate.
 
+### Weaviate 
+<img alt='Weaviate logo' src='https://raw.githubusercontent.com/semi-technologies/weaviate/19de0956c69b66c5552447e84d016f4fe29d12c9/docs/assets/weaviate-logo.png' align='center' />
+
+#### The GraphQL-based Search Graph 
+
+- Semantic Search engine
+- Automatic Classification
+- Knowledge Representation
+
+#### Documentation
+
+- [Documentation](https://semi.technology/documentation/weaviate/current/).
+- [Getting Started Guide](https://www.semi.technology/documentation/weaviate/current/get-started/quick_start.html).
+
+#### Support
+
+- [Stackoverflow for questions](https://stackoverflow.com/questions/tagged/weaviate).
+- [Github for issues](https://github.com/semi-technologies/weaviate/issues).
+
 ### ArXiV dataset
 
 #### Requirements
