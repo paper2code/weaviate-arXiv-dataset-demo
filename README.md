@@ -1,10 +1,12 @@
 # weaviate-arXiv-dataset-demo
 
 This repository will contain a demo using Weaviate with data and metadata from the arXiv dataset.
+Weaviate is a cloud-native, realtime vector search engine that allows you to bring your machine learning models to scale.
+[Weaviate documentation](https://www.semi.technology/documentation/weaviate/current/)
 
 ## Datasets
 
-In this repository, we have created weaviate schema for ArXiV metadata and PapersWithCode datasets.
+In this repository, we have created weaviate schemas for ArXiV and PapersWithCode datasets.
 Below, we will detail how to fetch and prepare these datasets for ingestion into Weaviate.
 
 ### ArXiV dataset
