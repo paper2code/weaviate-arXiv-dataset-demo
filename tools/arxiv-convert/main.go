@@ -18,7 +18,7 @@ func main() {
 	start := time.Now()
 
 	// create the export file
-	e, err := os.Create("../shared/datasets/arXiv/arxiv-metadata-oai-weaviate.json")
+	e, err := os.Create("../../shared/datasets/arXiv/arxiv-metadata-oai-weaviate.json")
 	if err != nil {
 		panic(err)
 	}
@@ -37,7 +37,7 @@ func main() {
 		categoriesMap[v.Code] = v.Name
 	}
 
-	fileName := "../shared/datasets/arXiv/arxiv-metadata-oai.json"
+	fileName := "../../shared/datasets/arXiv/arxiv-metadata-oai.json"
 	pp.Println("fileName:", fileName)
 
 	f, err := os.Open(fileName)
@@ -82,12 +82,14 @@ func main() {
 
 		arxiv.Abstract = strings.TrimSpace(strings.Replace(arxiv.Abstract, "\n", " ", -1))
 
+		var exportCategories []string
 		for _, category := range arxiv.CategoriesSlice {
 			cats := strings.Split(category, " ")
 			arxiv.Categories = append(arxiv.Categories, cats...)
 			for _, cat := range cats {
 				if v, ok := categoriesMap[cat]; ok {
 					arxiv.CategoriesFlatten = append(arxiv.CategoriesFlatten, &ArXivCategory{Code: cat, Name: v})
+					exportCategories = append(exportCategories, v)
 				}
 			}
 		}
@@ -95,7 +97,7 @@ func main() {
 		entry := &ArxivExport{
 			Authors:    arxiv.Authors,
 			Abstract:   arxiv.Abstract,
-			Categories: arxiv.Categories,
+			Categories: exportCategories,
 			Comments:   arxiv.Comments,
 			Doi:        arxiv.Doi,
 			ID:         arxiv.ID,
@@ -106,7 +108,7 @@ func main() {
 			Versions:   arxiv.Versions,
 		}
 
-		pp.Println("ID:", entry.ID, "Title:", entry.Title)
+		// pp.Println("ID:", entry.ID, "Title:", entry.Title)
 		entryBytes, _ := json.Marshal(entry)
 		w := bufio.NewWriter(e)
 		_, err := w.WriteString(string(entryBytes) + "\n")
