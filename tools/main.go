@@ -14,28 +14,21 @@ import (
 	"github.com/k0kubun/pp"
 )
 
-type ArxivMetadataJSON struct {
-	Authors         []string `json:"-"`
-	AuthorsStr      string   `json:"authors"`
-	Abstract        string   `json:"abstract"`
-	Categories      []string `json:"-"`
-	CategoriesSlice []string `json:"categories"`
-	Comments        string   `json:"comments"`
-	Doi             string   `json:"doi"`
-	ID              string   `json:"id"`
-	JournalRef      string   `json:"journal-ref"`
-	ReportNo        string   `json:"report-no"`
-	Submitter       string   `json:"submitter"`
-	Title           string   `json:"title"`
-	Versions        []string `json:"versions"`
-}
-
-func (a *ArxivMetadataJSON) Unmarshal(b []byte) error {
-	return json.Unmarshal(b, a)
-}
-
 func main() {
 	start := time.Now()
+
+	// load categories
+	var categories []*ArXivCategoryFlatten
+	if err := json.Unmarshal([]byte(arXivSubjectsFlat), &categories); err != nil {
+		panic(err)
+	}
+	pp.Println(categories)
+
+	// Build a config map:
+	categoriesMap := make(map[string]string, len(categories))
+	for _, v := range categories {
+		categoriesMap[v.Code] = v.Name
+	}
 
 	fileName := "../shared/datasets/arXiv/arxiv-metadata-oai.json"
 	pp.Println("fileName:", fileName)
@@ -82,6 +75,11 @@ func main() {
 		for _, category := range arxiv.CategoriesSlice {
 			cats := strings.Split(category, " ")
 			arxiv.Categories = append(arxiv.Categories, cats...)
+			for _, cat := range cats {
+				if v, ok := categoriesMap[cat]; ok {
+					arxiv.CategoriesFlatten = append(arxiv.CategoriesFlatten, &ArXivCategory{Code: cat, Name: v})
+				}
+			}
 		}
 
 		pp.Println(arxiv)
