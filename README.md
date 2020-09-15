@@ -3,8 +3,6 @@
 ![Weaviate feat arXiv](./docs/weaviate_arxiv.png "Weaviate feat arXiv")
 
 This repository will contain a demo using Weaviate with data and metadata from the arXiv dataset.
-Weaviate is a cloud-native, realtime vector search engine that allows you to bring your machine learning models to scale.
-[Weaviate documentation](https://www.semi.technology/documentation/weaviate/current/)
 
 ## Datasets
 
@@ -12,10 +10,10 @@ In this repository, we have created weaviate schemas for ArXiV and PapersWithCod
 Below, we will detail how to fetch and prepare these datasets for ingestion into Weaviate.
 
 ### Weaviate 
-<img alt='Weaviate logo' src='https://raw.githubusercontent.com/semi-technologies/weaviate/19de0956c69b66c5552447e84d016f4fe29d12c9/docs/assets/weaviate-logo.png' align='center' />
+Weaviate is a cloud-native, realtime vector search engine that allows you to bring your machine learning models to scale.
+[Weaviate documentation](https://www.semi.technology/documentation/weaviate/current/)
 
 #### The GraphQL-based Search Graph 
-
 - Semantic Search engine
 - Automatic Classification
 - Knowledge Representation
