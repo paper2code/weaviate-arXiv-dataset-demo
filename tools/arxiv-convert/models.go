@@ -4,6 +4,21 @@ import (
 	"encoding/json"
 )
 
+// ArxivExport repesents...
+type ArxivExport struct {
+	Authors    []string `json:"authors"`
+	Abstract   string   `json:"abstract"`
+	Categories []string `json:"categories"`
+	Comments   string   `json:"comments"`
+	Doi        string   `json:"doi"`
+	ID         string   `json:"id"`
+	JournalRef string   `json:"journal-ref"`
+	ReportNo   string   `json:"report-no"`
+	Submitter  string   `json:"submitter"`
+	Title      string   `json:"title"`
+	Versions   []string `json:"versions"`
+}
+
 // ArXivCategory represents
 type ArXivCategory struct {
 	Code string `json:"Code"`

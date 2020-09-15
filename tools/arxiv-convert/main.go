@@ -17,14 +17,21 @@ import (
 func main() {
 	start := time.Now()
 
-	// load categories
+	// create the export file
+	e, err := os.Create("../shared/datasets/arXiv/arxiv-metadata-oai-weaviate.json")
+	if err != nil {
+		panic(err)
+	}
+	defer e.Close()
+
+	// load arXiv categories
 	var categories []*ArXivCategoryFlatten
 	if err := json.Unmarshal([]byte(arXivSubjectsFlat), &categories); err != nil {
 		panic(err)
 	}
 	pp.Println(categories)
 
-	// Build a config map:
+	// Build a arXiv categories map
 	categoriesMap := make(map[string]string, len(categories))
 	for _, v := range categories {
 		categoriesMap[v.Code] = v.Name
@@ -37,6 +44,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error to read [file=%v]: %v", fileName, err.Error())
 	}
+	defer f.Close()
 
 	fi, err := f.Stat()
 	if err != nil {
@@ -51,12 +59,14 @@ func main() {
 	for {
 
 		var arxiv ArxivMetadataJSON
-
 		if err := d.Decode(&arxiv); err == io.EOF {
 			break
 		} else if err != nil {
 			log.Fatal(err)
 		}
+
+		arxiv.Title = strings.Replace(arxiv.Title, "\n", " ", -1)
+		arxiv.Title = strings.Replace(arxiv.Title, "  ", " ", -1)
 
 		arxiv.AuthorsStr = strings.Replace(arxiv.AuthorsStr, "\n", " ", -1)
 		arxiv.AuthorsStr = strings.Replace(arxiv.AuthorsStr, " , ", ",", -1)
@@ -82,7 +92,28 @@ func main() {
 			}
 		}
 
-		pp.Println(arxiv)
+		entry := &ArxivExport{
+			Authors:    arxiv.Authors,
+			Abstract:   arxiv.Abstract,
+			Categories: arxiv.Categories,
+			Comments:   arxiv.Comments,
+			Doi:        arxiv.Doi,
+			ID:         arxiv.ID,
+			JournalRef: arxiv.JournalRef,
+			ReportNo:   arxiv.ReportNo,
+			Submitter:  arxiv.Submitter,
+			Title:      arxiv.Title,
+			Versions:   arxiv.Versions,
+		}
+
+		pp.Println("ID:", entry.ID, "Title:", entry.Title)
+		entryBytes, _ := json.Marshal(entry)
+		w := bufio.NewWriter(e)
+		_, err := w.WriteString(string(entryBytes) + "\n")
+		if err != nil {
+			panic(err)
+		}
+		w.Flush()
 
 	}
 
